@@ -5,6 +5,8 @@ import br.com.vbuttini.logs.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Vinicius Buttini
  */
@@ -16,6 +18,10 @@ public class LogService {
 
     public Log insertLog(Log log){
         return repository.insert(log);
+    }
+
+    public List<Log> listLogs(){
+        return repository.findAll();
     }
 
 }

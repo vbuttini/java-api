@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 /**
  * This class contain the order repository
  *
- * @author vinic
+ * @author Vinicius Buttini
  */
 @Repository
-public interface LogRepository extends MongoRepository<Log, String>  {
+public interface LogRepository extends MongoRepository<Log, String> {
 }

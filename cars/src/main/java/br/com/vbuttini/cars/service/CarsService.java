@@ -1,6 +1,9 @@
 package br.com.vbuttini.cars.service;
 
+import br.com.vbuttini.cars.dto.LogDto;
 import br.com.vbuttini.cars.entity.Car;
+import br.com.vbuttini.cars.factory.LocalDateTimeFactory;
+import br.com.vbuttini.cars.service.exception.DataBaseException;
 import br.com.vbuttini.cars.util.ObjectConverterUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.EndpointInject;
@@ -10,8 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Vinicius Buttini
@@ -39,10 +42,20 @@ public class CarsService {
 
     public Car insertCar(Car car) {
         var url = externalApiUrl + ENDPOINT_URI;
-        var carSaved = restTemplate.postForObject(url, car, Car.class);
+        var carSaved = restTemplate.postForEntity(url, car, Car.class).getBody();
 
-        var json = objectConverterUtil.toJson(carSaved);
-        producerTemplateLog.sendBody(json);
+        if (Objects.isNull(carSaved)) {
+            throw new DataBaseException("Carro não retornado");
+        }
+
+        var logDto = LogDto.builder()
+                .carId(carSaved.get_id())
+                .dateTime(LocalDateTimeFactory.now())
+                .build();
+
+        var logJson = objectConverterUtil.toJson(logDto);
+        producerTemplateLog.sendBody(logJson);
+
         return carSaved;
     }
 }

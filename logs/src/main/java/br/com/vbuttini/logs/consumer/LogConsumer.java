@@ -2,6 +2,8 @@ package br.com.vbuttini.logs.consumer;
 
 import br.com.vbuttini.logs.entity.Log;
 import br.com.vbuttini.logs.service.LogService;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
