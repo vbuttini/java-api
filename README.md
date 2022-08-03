@@ -9,4 +9,4 @@ Para rodar esse microsserviço é necessário:
  user=guest
  password=guest
 
-Detalhe importante: Atentar-se em rodar os dois projetos: ms-car e ms-log
+Detalhe importante: Atentar-se em rodar os dois projetos: car e log
